@@ -1,7 +1,5 @@
-
-#ifndef DOUBLE_LINKED_LIST
-#define DOUBLE_LINKED_LIST
-
+#ifndef SINGLE_LINKED_LIST
+#define SINGLE_LINKED_LIST
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,18 +7,7 @@
 struct Node {
 	int data;
 	struct Node* next;
-	struct Node* prev;
 };
-
-
-struct Node* create_new_node(int value){
-	struct Node* node = (struct Node*) malloc(sizeof(struct Node)); // in cpp : Node* temp = new Node();
-	node->data = value;		// same as: (*temp).data = 2;
-	node->next = NULL;		// same as: (*temp).link = NULL;
-	node->prev = NULL;
-
-	return node;
-}
 
 
 int get_list_length(struct Node *list){
@@ -47,12 +34,6 @@ void print_list(struct Node *list){
 
 	while (ptr != NULL) {
 		printf("(%d.) %d\n", index, ptr->data);
-		/*
-		if (index > 0)
-			printf(" - prev: %d\n", ptr->prev->data);
-		if (index < get_list_length(list))
-			printf(" - next: %d\n", ptr->next->data);
-		/* */
 		ptr = ptr->next;
 		index += 1;
 	}
@@ -72,25 +53,24 @@ void print_list_recursive(struct Node *node){
 }
 
 void insert_at_start(struct Node **ptr_list, int value){
-	struct Node* temp = create_new_node(value);
+	struct Node* temp = (struct Node*) malloc(sizeof(struct Node)); // in cpp : Node* temp = new Node();
+	temp->data = value;		// same as: (*temp).data = 2;
+	temp->next = NULL;		// same as: (*temp).link = NULL;
 
-	if (*ptr_list != NULL) {
-		temp->next = *ptr_list;
-		temp->next->prev = temp;
-	}
-
+	if (*ptr_list != NULL) temp->next = *ptr_list;
 	*ptr_list = temp;
 
 }
 
 void insert_at_end(struct Node *list, int value){
-	struct Node* temp = create_new_node(value);
+	struct Node* temp = (struct Node*) malloc(sizeof(struct Node));
+	temp->data = value;
+	temp->next = NULL;
 
 	struct Node* ptr = list;
 	while (ptr->next != NULL){
 		ptr = ptr->next;
 	}
-	temp->prev = ptr;
 	ptr->next = temp;
 }
 
@@ -109,22 +89,23 @@ struct Node* get_node_at_postition(struct Node *list, int position){
 }
 
 void insert_at_position(struct Node **ptr_list, int value, int position){
-	struct Node* new_node = create_new_node(value);
+
+	struct Node* temp = (struct Node*) malloc(sizeof(struct Node));
+	temp->data = value;
+	temp->next = NULL;
 
 	if (position == 0){
-		new_node->next = *ptr_list;
-		*ptr_list = new_node;
+		// put at first position
+		temp->next = *ptr_list;
+		*ptr_list = temp;
 		return;
 	}
 
 	struct Node* before = get_node_at_postition(*ptr_list, position-1);
 	struct Node* after = get_node_at_postition(*ptr_list, position);
 
-	before->next = new_node;
-	new_node->prev = before;
-
-	new_node->next = after;
-	after->prev = new_node;
+	before->next = temp;
+	temp->next = after;
 }
 
 void delete_elemtent(struct Node **ptr_list, int position){
@@ -136,7 +117,6 @@ void delete_elemtent(struct Node **ptr_list, int position){
 		*ptr_list = after;
 	}else{
 		before->next = after;
-		after->prev = before;
 	}
 	free(del);
 }
@@ -148,13 +128,10 @@ void reverse_list(struct Node **list){
 	struct Node *current, *prev, *next;
 	current = *list;
 	prev = NULL;
-	next = NULL;
 
 	while (current != NULL){
 		next = current->next;
 		current->next = prev;
-		current->prev = next;
-
 		prev = current;
 		current = next;
 	}
@@ -186,12 +163,8 @@ struct Node* copy_list(struct Node *list){
 	return new_list;
 }
 
-void delete_list_recursive(struct Node **list, struct Node *node){
-	if (node->next == NULL){
-		return;
-	}
-	reverse_list_recursive(list, node->next);
-	free(node);
+void delete_list(struct Node **list){
+	;
 }
 
 #endif
