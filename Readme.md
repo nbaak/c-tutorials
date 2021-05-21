@@ -11,18 +11,25 @@ A single linked List is a List where each Node points at the following Node unti
 
 ### Double Linked List
 ![DoubleLinkedList](doc/double_linked_list.png "Double Linked List")
-The double linked List contains Nodes with the Information of the previous and the next Node. 
 
+The double linked List contains Nodes with the Information of the previous and the next Node. 
 
 ## Stack
 ![Stack](doc/stack.png "Stack")
+
 Examples of an Array based Stack and a List based Stack.
 
 Stacks are Data Structures where you can Add (push) and Remove/Get (Pop) Data only from one End. This is known as the First in Last out (Filo) Principe.
 
-## TODO: Queue
+## Queue
 Queues are Data Structures where you can Add Data from one End but you can Access it only from the other End, known as First In First out (FIFO).
 
+
+## Pointers 
+A small collection to play with basic pointer functions.
+
+## Matrix
+The attempt to build a 2 Dimensional Matrix of the Size NxM.
 
 ## What is this for
 This small "Tutorial" is more for my self to write down the basic things about C and Pointers. But if others find this useful they are invied to use and alter my stuff as they want. If you have some ideas for improvement, let me know!
